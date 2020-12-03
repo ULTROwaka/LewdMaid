@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LewdMaid.ViewModels
 {
@@ -41,12 +42,12 @@ namespace LewdMaid.ViewModels
             if (AllPictures.Count > 0)
             {
                 SelectedPicture = AllPictures[0];
-            }        
+            }
 
-            Refresh = ReactiveCommand.Create(() => 
+            Refresh = ReactiveCommand.Create(() =>
                 {
                     AllPictures.Clear();
-                    var pictures = provider.Provide(10).Select(x => new PictureViewModel(x));                   
+                    var pictures = provider.Provide(10).Select(x => new PictureViewModel(x));
                     foreach (var picture in pictures)
                     {
                         AllPictures.Add(picture);

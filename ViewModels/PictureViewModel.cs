@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LewdMaid.ViewModels
 {
@@ -32,10 +33,24 @@ namespace LewdMaid.ViewModels
 
             PosrUrl = _picture.PostUrl;
 
+
             //Load Image
+            LoadImage();
+            /*
             var assetUri = ImageDownloader.DownloadToAssets(@"C:/Users/ULTRO/Documents/LewdMaidImages",
                 _picture.PreviewUrl ?? _picture.Url, _picture.Hash, _picture.Url.Split('.').Last());
             Preview = new Bitmap(assetUri);
+            */
+        }
+
+        private Task LoadImage()
+        {
+            return Task.Run(() =>
+            {
+                var assetUri = ImageDownloader.DownloadToAssets(@"C:/Users/ULTRO/Documents/LewdMaidImages",
+                     _picture.PreviewUrl ?? _picture.Url, _picture.Hash, _picture.Url.Split('.').Last());
+                Preview = new Bitmap(assetUri);
+            });
         }
     }
 }

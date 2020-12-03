@@ -1,7 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget></PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -17,4 +20,12 @@
     <Folder Include="Assets\GelbooruImages\" />
     <Folder Include="Assets\Rule34xxxImages\" />
   </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\Themes\LewdMaid.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\Themes\LewdMaid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>   
 </Project>

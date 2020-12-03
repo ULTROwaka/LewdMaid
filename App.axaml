@@ -7,16 +7,17 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
-        <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
-        <Style Selector="Button.Red">
-          <Setter Property="Background" Value="#d22222"/>
-          <Setter Property="Foreground" Value="#f1c894"/>
-        </Style>
+      <StyleInclude Source="avares://LewdMaid/Assets/Themes/LewdMaid.xaml"/>
+      <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
+      <!--<StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>  -->          
+      <Style Selector="Button.Red">
+        <Setter Property="Background" Value="#d22222"/>
+        <Setter Property="Foreground" Value="#f1c894"/>
+      </Style>
 
-        <Style Selector="Button.Green">
-          <Setter Property="Background" Value="#259444"/>
-          <Setter Property="Foreground" Value="#f1c894"/>
-        </Style>
+      <Style Selector="Button.Green">
+        <Setter Property="Background" Value="#259444"/>
+        <Setter Property="Foreground" Value="#f1c894"/>
+      </Style>
     </Application.Styles>
 </Application>

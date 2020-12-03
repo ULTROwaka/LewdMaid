@@ -22,7 +22,8 @@ namespace LewdMaid
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(new Rule34xxxProvider(@"https://r34-json.herokuapp.com/posts?limit=*limit*", "*limit*")),
+                    DataContext = new MainWindowViewModel(new Rule34xxxProvider(@"https://r34-json.herokuapp.com/posts?limit=*limit*",
+                    "*limit*")),
                 };
             }
 

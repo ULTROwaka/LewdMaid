@@ -15,7 +15,7 @@ namespace LewdMaid.Models
                 .Append(@"/")
                 .Append(name)
                 .Append(".")
-                .Append(format);
+                .Append(format);         
 
             string assetUri = stringBuilder.ToString();
 

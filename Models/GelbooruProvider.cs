@@ -1,4 +1,6 @@
-﻿using LewdMaid.Models;
+﻿using Avalonia.X11;
+
+using LewdMaid.Models;
 
 using Newtonsoft.Json;
 
@@ -28,16 +30,8 @@ namespace LewdMaid.Models
         {
             IEnumerable<GelbooruResponse> picturesFromApi = GetPicturesFromApi(count);
             picturesFromApi = FiltrateByFormat(picturesFromApi, new string[] {"jpg", "jpeg", "png"});
-            IEnumerable<Picture> pictures = picturesFromApi.Cast<Picture>();
-            /*
-            foreach(var picture in pictures)
-            {
-                var assetUri =  ImageDownloader.DownloadToAssets(@"/Assets/GelbooruImages", 
-                    picture.PreviewUrl ?? picture.Url, picture.Hash, picture.Url.Split('.').Last());
-                picture.AssetUri = assetUri;
-            }
-            */
-
+            IEnumerable<Picture> pictures = picturesFromApi.Cast<Picture>();          
+         
             pictures = FixTags(pictures);
             return pictures;
         }

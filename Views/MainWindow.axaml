@@ -11,10 +11,6 @@
         Title="LewdMaid"
         MinHeight="800">
   
-    <Window.Resources>
-      <converters:BitmapValueConverter x:Key="BitmapValueConverter"/>
-    </Window.Resources>
-  
   <Grid RowDefinitions="auto, auto">
     <Grid.ColumnDefinitions>
       <ColumnDefinition MinWidth="300" Width="*"/>

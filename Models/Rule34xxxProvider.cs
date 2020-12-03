@@ -1,4 +1,6 @@
-﻿using LewdMaid.Models;
+﻿using Avalonia.X11;
+
+using LewdMaid.Models;
 
 using Newtonsoft.Json;
 
@@ -30,15 +32,6 @@ namespace LewdMaid.Models
             picturesFromApi = FiltrateByFormat(picturesFromApi, new string[] { "jpg", "jpeg", "png" });
 
             IEnumerable<Picture> pictures = picturesFromApi.Select(x => (Picture)x).ToList();
-
-            /*
-            foreach (var picture in pictures)
-            {
-                var assetUri = ImageDownloader.DownloadToAssets(@"C:/Users/ULTRO/Documents/Rule34xxxImages",
-                    picture.PreviewUrl ?? picture.Url, picture.Hash, picture.Url.Split('.').Last());
-            }
-            */
-
             pictures = FixTags(pictures);
             return pictures;
         }
