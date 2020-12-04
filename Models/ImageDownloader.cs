@@ -32,5 +32,14 @@ namespace LewdMaid.Models
 
             return assetUri;
         }
+
+        public static byte[] DownloadToByteArray(string imageUrl)
+        {
+            using (var client = new WebClient())
+            {
+
+                return client.DownloadData(imageUrl);
+            }
+        }
     }
 }

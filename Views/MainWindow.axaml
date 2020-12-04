@@ -42,10 +42,12 @@
     
     <!--Right panel with list of loaded picture-->
     <Border Grid.Column="1" Grid.Row="1"
-            Padding="20,3,10,10">         
+            Padding="20,3,10,10">
       <ListBox Items="{Binding AllPictures}" SelectedItem="{Binding SelectedPicture}" 
                BorderThickness="0"
-               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+               VirtualizationMode="None"
+               VerticalAlignment="Top">
 
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>

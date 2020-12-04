@@ -9,6 +9,7 @@ using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,20 +37,15 @@ namespace LewdMaid.ViewModels
 
             //Load Image
             LoadImage();
-            /*
-            var assetUri = ImageDownloader.DownloadToAssets(@"C:/Users/ULTRO/Documents/LewdMaidImages",
-                _picture.PreviewUrl ?? _picture.Url, _picture.Hash, _picture.Url.Split('.').Last());
-            Preview = new Bitmap(assetUri);
-            */
         }
 
         private Task LoadImage()
         {
             return Task.Run(() =>
             {
-                var assetUri = ImageDownloader.DownloadToAssets(@"C:/Users/ULTRO/Documents/LewdMaidImages",
-                     _picture.PreviewUrl ?? _picture.Url, _picture.Hash, _picture.Url.Split('.').Last());
-                Preview = new Bitmap(assetUri);
+                var imageByteArray = ImageDownloader.DownloadToByteArray(_picture.PreviewUrl ?? _picture.Url);
+                Stream stream = new MemoryStream(imageByteArray);
+                Preview = new Bitmap(stream);
             });
         }
     }
