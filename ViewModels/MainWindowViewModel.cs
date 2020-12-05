@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LewdMaid.ViewModels
@@ -22,18 +23,20 @@ namespace LewdMaid.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly IPictureProvider _pictureProvider;
-        private int _count = 50;
+        private int _count = 30;
         [Reactive]
         ObservableCollection<PictureViewModel> AllPictures { get; set; }
         //Post Candidates
         [Reactive]
-        ObservableCollection<PictureViewModel> SelectedPictires { get; set; }
+        ObservableCollection<PictureViewModel> SelectedPictures { get; set; }
         [Reactive]
         PictureViewModel SelectedPicture { get; set; }
         [Reactive]
         TagCloudViewModel Cloud { get; set; }
         ReactiveCommand<Unit, IEnumerable<Picture>> Refresh { get; }
         ReactiveCommand<Unit, Unit> OpenPostInBrowser { get; }
+        ReactiveCommand<Unit, Unit> AddPicture { get; }
+        ReactiveCommand<Unit, Unit> RemovePicture { get; }
 
         public MainWindowViewModel(IPictureProvider provider)
         {
@@ -50,7 +53,7 @@ namespace LewdMaid.ViewModels
                 SelectedPicture = AllPictures[0];
             }
 
-            SelectedPictires = new ObservableCollection<PictureViewModel>();
+            SelectedPictures = new ObservableCollection<PictureViewModel>();
 
             Refresh = ReactiveCommand.CreateFromTask(GetPicturesAsync);
             Refresh.Subscribe(x =>
@@ -62,6 +65,9 @@ namespace LewdMaid.ViewModels
                 }
                 SelectedPicture = AllPictures[0];
             });
+
+            AddPicture = ReactiveCommand.Create(() => { SelectedPictures.Add(SelectedPicture); });
+            RemovePicture = ReactiveCommand.Create(() => { SelectedPictures.Remove(SelectedPicture); });
 
             OpenPostInBrowser = ReactiveCommand.Create(() => 
             {
@@ -76,7 +82,7 @@ namespace LewdMaid.ViewModels
 
         private Task<IEnumerable<Picture>> GetPicturesAsync()
         {
-            return Task.Run( () =>
+            return Task.Factory.StartNew( () =>
                 {
                     return _pictureProvider.Provide(_count);
                 });

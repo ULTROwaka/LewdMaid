@@ -9,9 +9,11 @@ using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LewdMaid.ViewModels
@@ -41,12 +43,12 @@ namespace LewdMaid.ViewModels
 
         private Task LoadImage()
         {
-            return Task.Run(() =>
+            return Task.Factory.StartNew(() =>
             {
                 var imageByteArray = ImageDownloader.DownloadToByteArray(_picture.PreviewUrl ?? _picture.Url);
                 Stream stream = new MemoryStream(imageByteArray);
                 Preview = new Bitmap(stream);
-            });
+            },creationOptions: TaskCreationOptions.LongRunning);
         }
     }
 }

@@ -9,9 +9,13 @@
         x:Class="LewdMaid.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="LewdMaid"
-        MinHeight="800">
+        MinHeight="940">
   
-  <Grid RowDefinitions="auto, auto">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition  Height="auto"/>
+      <RowDefinition  Height="{Binding $parent[Window].Height}"/>
+    </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition MinWidth="300" Width="*"/>
       <ColumnDefinition Width="4*"/>
@@ -35,35 +39,73 @@
 
         <views:TagCloud DataContext="{Binding Cloud}"/>
                
-        <Button Content="Add" Margin="0,10,0,10"/>    
-        <Button Content="Remove"/>             
+        <Button Content="Add" Command="{Binding AddPicture}"
+                Margin="0,10,0,10"/>    
+        <Button Content="Remove" Command="{Binding RemovePicture}"/>             
       </StackPanel>    
     </Border>
     
     <!--Right panel with list of loaded picture-->
     <Border Grid.Column="1" Grid.Row="1"
+            
             Padding="20,3,10,10">
-      <ListBox Items="{Binding AllPictures}" SelectedItem="{Binding SelectedPicture}" 
-               BorderThickness="0"
-               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-               VirtualizationMode="None"
-               VerticalAlignment="Top">
+      <TabControl VerticalAlignment="Top">
+       
+        <!--List of all provided pictures-->
+        <TabItem Header="All pictures"
+                 VerticalContentAlignment="Center">
+          <ListBox Items="{Binding AllPictures}" SelectedItem="{Binding SelectedPicture}"
+                BorderThickness="0" VerticalAlignment="Top"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                
+                VirtualizationMode="None">
 
-        <ListBox.ItemsPanel>
-          <ItemsPanelTemplate>
-            <WrapPanel/>
-          </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
+            <ListBox.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel/>
+              </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            
+            <!--Picture preview-->
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Border BorderThickness="2" BorderBrush="#54fcde" Margin="10" Width="150" Height="150">
+                  <Image Source="{Binding Preview}"/>
+                </Border>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
 
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <Border BorderThickness="2" BorderBrush="#54fcde" Margin="10" Width="150" Height="150">
-              <Image Source="{Binding Preview}"/>
-            </Border>
-          </DataTemplate>
-        </ListBox.ItemTemplate>
+          </ListBox>
+        </TabItem>
+
+        <!--List of candidates to posting-->
+        <TabItem Header="Selected pictures"
+                 VerticalContentAlignment="Center">
+          <ListBox Items="{Binding SelectedPictures}" SelectedItem="{Binding SelectedPicture}"
+                BorderThickness="0" VerticalAlignment="Top"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                Height="{Binding $parent[Window].Height}"
+                VirtualizationMode="None">
+
+            <ListBox.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel/>
+              </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <!--Picture preview-->
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Border BorderThickness="2" BorderBrush="#54fcde" Margin="10" Width="150" Height="150">
+                  <Image Source="{Binding Preview}"/>
+                </Border>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+
+          </ListBox>
+        </TabItem>
         
-      </ListBox>     
+      </TabControl>
     </Border>  
   </Grid>
   
