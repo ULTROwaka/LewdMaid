@@ -13,8 +13,8 @@
   
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition  Height="auto"/>
-      <RowDefinition  Height="{Binding $parent[Window].Height}"/>
+      <RowDefinition  Height="Auto"/>
+      <RowDefinition  Height="*"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition MinWidth="300" Width="*"/>
@@ -47,7 +47,6 @@
     
     <!--Right panel with list of loaded picture-->
     <Border Grid.Column="1" Grid.Row="1"
-            
             Padding="20,3,10,10">
       <TabControl VerticalAlignment="Top">
        
