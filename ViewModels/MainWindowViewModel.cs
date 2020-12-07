@@ -3,6 +3,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 
 using LewdMaid.Models;
+using LewdMaid.Models.Sender;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -24,6 +25,7 @@ namespace LewdMaid.ViewModels
     {
         private readonly IPictureProvider _pictureProvider;
         private int _count = 30;
+        private readonly TelegramSender _sender;
         [Reactive]
         ObservableCollection<PictureViewModel> AllPictures { get; set; }
         //Post Candidates
@@ -37,10 +39,12 @@ namespace LewdMaid.ViewModels
         ReactiveCommand<Unit, Unit> OpenPostInBrowser { get; }
         ReactiveCommand<Unit, Unit> AddPicture { get; }
         ReactiveCommand<Unit, Unit> RemovePicture { get; }
+        ReactiveCommand<Unit, Unit> SendPicture { get;  }
 
-        public MainWindowViewModel(IPictureProvider provider)
+        public MainWindowViewModel(IPictureProvider provider, TelegramSender sender)
         {
             _pictureProvider = provider;
+            _sender = sender;
 
             this.WhenAnyValue(x => x.SelectedPicture)
                 .Where(x => x != null)
@@ -52,7 +56,6 @@ namespace LewdMaid.ViewModels
             {
                 SelectedPicture = AllPictures[0];
             }
-
             SelectedPictures = new ObservableCollection<PictureViewModel>();
 
             Refresh = ReactiveCommand.CreateFromTask(GetPicturesAsync);
@@ -65,10 +68,9 @@ namespace LewdMaid.ViewModels
                 }
                 SelectedPicture = AllPictures[0];
             });
-
+            SendPicture = ReactiveCommand.CreateFromTask(SendPictureAsync);
             AddPicture = ReactiveCommand.Create(() => { SelectedPictures.Add(SelectedPicture); });
             RemovePicture = ReactiveCommand.Create(() => { SelectedPictures.Remove(SelectedPicture); });
-
             OpenPostInBrowser = ReactiveCommand.Create(() => 
             {
                 var info = new ProcessStartInfo
@@ -86,6 +88,21 @@ namespace LewdMaid.ViewModels
                 {
                     return _pictureProvider.Provide(_count);
                 });
+        }
+
+        private Task SendPictureAsync()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                var post = new TelegramPost()
+                {
+                    ButtonUrl = SelectedPicture.PosrUrl,
+                    Image = new Telegram.Bot.Types.InputFiles.InputOnlineFile(SelectedPicture.Picture.Url),
+                    Text = string.Join(" ", SelectedPicture.Tags.Where(x => x.State).Select(x => x.Text))
+                };
+
+                _sender.Send(post);
+            });
         }
     }
 }

@@ -20,7 +20,7 @@ namespace LewdMaid.ViewModels
 {
     public class PictureViewModel : ViewModelBase
     {
-        private readonly Picture _picture;
+        public Picture Picture { get; private set; }
         [Reactive]
         public Bitmap Preview { get; set; }
         [Reactive]
@@ -30,11 +30,11 @@ namespace LewdMaid.ViewModels
 
         public PictureViewModel(Picture picture)
         {
-            _picture = picture;
+            Picture = picture;
 
-            Tags = new ObservableCollection<TagViewModel>(_picture.Tags.Select(x => new TagViewModel(x)));
+            Tags = new ObservableCollection<TagViewModel>(Picture.Tags.Select(x => new TagViewModel(x)));
 
-            PosrUrl = _picture.PostUrl;
+            PosrUrl = Picture.PostUrl;
 
 
             //Load Image
@@ -45,7 +45,7 @@ namespace LewdMaid.ViewModels
         {
             return Task.Factory.StartNew(() =>
             {
-                var imageByteArray = ImageDownloader.DownloadToByteArray(_picture.PreviewUrl ?? _picture.Url);
+                var imageByteArray = ImageDownloader.DownloadToByteArray(Picture.PreviewUrl ?? Picture.Url);
                 Stream stream = new MemoryStream(imageByteArray);
                 Preview = new Bitmap(stream);
             },creationOptions: TaskCreationOptions.LongRunning);

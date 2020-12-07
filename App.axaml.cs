@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
 using LewdMaid.Models;
+using LewdMaid.Models.Sender;
 
 using LewdMaid.ViewModels;
 using LewdMaid.Views;
@@ -22,8 +23,8 @@ namespace LewdMaid
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(new Rule34xxxProvider(@"https://r34-json.herokuapp.com/posts?limit=*limit*",
-                    "*limit*")),
+                    DataContext = new MainWindowViewModel(new Rule34xxxProvider(@"https://r34-json.herokuapp.com/posts?tags=-furry&limit=*limit*",
+                    "*limit*"), new TelegramSender("468402185:AAGUZpYGp5dGsy-sFf2_3UT6zHs_tJbaVdg", -1001114198374)),
                 };
             }
 
