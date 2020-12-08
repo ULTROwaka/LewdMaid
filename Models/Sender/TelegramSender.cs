@@ -28,7 +28,15 @@ namespace LewdMaid.Models.Sender
                 Url = post.ButtonUrl
             };
             var keyboard = new InlineKeyboardMarkup(toPostButton);
-            _botClient.SendPhotoAsync(_chatId, post.Image, caption: post.Text, replyMarkup: keyboard, disableNotification: true);
+            try
+            {
+                _botClient.SendPhotoAsync(_chatId, post.Image, caption: post.Text, replyMarkup: keyboard, disableNotification: true).Wait();
+            }
+            catch (AggregateException ae)
+            {
+                _botClient.SendPhotoAsync(_chatId, post.PreviewImage, caption: post.Text, replyMarkup: keyboard, disableNotification: true);
+            }
+            
         }
     }
 }

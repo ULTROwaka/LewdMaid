@@ -19,5 +19,9 @@
         <Setter Property="Background" Value="#259444"/>
         <Setter Property="Foreground" Value="#f1c894"/>
       </Style>
+
+      <Style Selector="ScrollBar:vertical /template/ Thumb#thumb">
+        <Setter Property="Background" Value="#808080"/>
+      </Style>
     </Application.Styles>
 </Application>

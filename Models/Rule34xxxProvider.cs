@@ -105,6 +105,7 @@ namespace LewdMaid.Models
             Regex reg = new Regex(@"[a-zA-Z]*[\d!+\/&?=:><;^@]+[a-zA-Z]*");
             return reg.IsMatch(tag) || tag.Equals("") || tag.Equals(" ");
         }
+
     }
 
     public class Rule34xxxResponse
@@ -206,7 +207,8 @@ namespace LewdMaid.Models
                 Url = response.FileUrl,
                 PreviewUrl = response.SampleUrl,
                 Rating = float.Parse(response.Score),
-                Tags = response.Tags.Select(x => new Tag() { Name = x})
+                Tags = response.Tags.Select(x => new Tag() { Name = x}),
+                Size = 0
             };
             return picture;
         }

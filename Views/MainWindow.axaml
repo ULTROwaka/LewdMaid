@@ -59,8 +59,7 @@
           <ListBox Items="{Binding AllPictures}" SelectedItem="{Binding SelectedPicture}"
                 BorderThickness="0" VerticalAlignment="Top"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                
-                VirtualizationMode="None">
+                VirtualizationMode="Simple">
 
             <ListBox.ItemsPanel>
               <ItemsPanelTemplate>

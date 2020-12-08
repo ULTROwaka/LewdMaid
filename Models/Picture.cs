@@ -11,6 +11,7 @@ namespace LewdMaid.Models
         public string Url { get; set; }
         public string PreviewUrl { get; set; }
         public float Rating { get; set; }
+        public long Size { get; set; }
         public IEnumerable<Tag> Tags { get; set; }
     }
 }

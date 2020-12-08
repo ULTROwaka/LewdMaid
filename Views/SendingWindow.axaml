@@ -1,0 +1,64 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="450"
+        Width="700" Height="500"
+        x:Class="LewdMaid.Views.SendingWindow"
+        Title="SendingWindow">
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="320"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+    </Grid.RowDefinitions>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    
+    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+      <Border BorderThickness="2" BorderBrush="#54fcde" Width="300" Height="300">
+        <Image Source="{Binding Picture.Image}"/>
+      </Border>
+      
+      <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                    Height="300">
+        <ItemsControl Items="{Binding Picture.Tags}">
+
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <WrapPanel/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Text}" Margin="5"/>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
+      </ScrollViewer>
+    </StackPanel>
+
+    <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+      <Button Content="Send" Command="{Binding SendPicture}"/>
+      <CheckBox Content="Deferre" Name="isDefere" IsChecked="{Binding IsDeferre}"/>
+    </StackPanel>
+
+    <Border Margin="0,10,0,0" Grid.Row="2" Grid.Column="0"  IsEnabled="{Binding #isDefere.IsChecked}">
+        <DatePicker SelectedDate="{Binding Date}"/>
+     </Border>
+    <Border Margin="20,10,0,0" Grid.Row="2" Grid.Column="1"  IsEnabled="{Binding #isDefere.IsChecked}">
+      <StackPanel Orientation="Horizontal" >
+        <TextBlock Text="At:" Margin="0,0,10,0" VerticalAlignment="Center"/>
+        <NumericUpDown Maximum="23" Minimum="0" Value="{Binding Hours}"/>
+        <TextBlock Text=":" VerticalAlignment="Center"/>
+        <NumericUpDown Maximum="59" Minimum="0" Value="{Binding Minutes}"/>
+      </StackPanel>   
+    </Border>
+
+  </Grid>
+</Window>

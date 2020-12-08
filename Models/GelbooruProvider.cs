@@ -107,6 +107,7 @@ namespace LewdMaid.Models
             return reg.IsMatch(tag) || tag.Equals("") || tag.Equals(" ");
         }
 
+
         private class GelbooruResponse
         {
             [JsonProperty("directory")]
@@ -150,7 +151,8 @@ namespace LewdMaid.Models
                     Url = response.FileUrl,
                     PreviewUrl = response.GetSampleUrl(),
                     Rating = float.Parse(response.Score),
-                    Tags = response.Tags.Split(' ').Select(x => new Tag() { Name = x })
+                    Tags = response.Tags.Split(' ').Select(x => new Tag() { Name = x }),
+                    Size = 0
                 };
                 return picture;
             }

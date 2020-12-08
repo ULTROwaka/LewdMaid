@@ -1,9 +1,11 @@
 ﻿using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 
 using LewdMaid.Models;
 using LewdMaid.Models.Sender;
+using LewdMaid.Views;
 
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -24,7 +26,7 @@ namespace LewdMaid.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly IPictureProvider _pictureProvider;
-        private int _count = 30;
+        private int _count = 70;
         private readonly TelegramSender _sender;
         [Reactive]
         ObservableCollection<PictureViewModel> AllPictures { get; set; }
@@ -40,6 +42,7 @@ namespace LewdMaid.ViewModels
         ReactiveCommand<Unit, Unit> AddPicture { get; }
         ReactiveCommand<Unit, Unit> RemovePicture { get; }
         ReactiveCommand<Unit, Unit> SendPicture { get;  }
+        ReactiveCommand<Unit, Unit> OpenSendingWindow { get; }
 
         public MainWindowViewModel(IPictureProvider provider, TelegramSender sender)
         {
@@ -94,10 +97,12 @@ namespace LewdMaid.ViewModels
         {
             return Task.Factory.StartNew(() =>
             {
+
                 var post = new TelegramPost()
                 {
                     ButtonUrl = SelectedPicture.PosrUrl,
                     Image = new Telegram.Bot.Types.InputFiles.InputOnlineFile(SelectedPicture.Picture.Url),
+                    PreviewImage = new Telegram.Bot.Types.InputFiles.InputOnlineFile(SelectedPicture.Picture.PreviewUrl),
                     Text = string.Join(" ", SelectedPicture.Tags.Where(x => x.State).Select(x => x.Text))
                 };
 

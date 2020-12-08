@@ -2,18 +2,24 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
+using LewdMaid.Models.Sender;
 using LewdMaid.ViewModels;
 
 namespace LewdMaid.Views
 {
-    public class MainWindow : Window
+    public class SendingWindow : Window
     {
-        public MainWindow()
+        public SendingWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 #if DEBUG
             this.AttachDevTools();
 #endif
+        }
+
+        public SendingWindow(PictureViewModel picture, TelegramSender sender) : this()
+        {
+            DataContext = new SendingWindowViewModel(picture, sender);
         }
 
         private void InitializeComponent()
